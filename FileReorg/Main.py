@@ -1,6 +1,6 @@
-import FileSystem as fs
 import Config as conf
-import Functions
+import FileSystem as fs
+import Functions as fn
 
 config = conf.GetConfig()
 vid_exts = config['video-ext']
@@ -8,12 +8,20 @@ cs_ext = config['contact-ext']
 
 allfiles = fs.GetAllFiles(config['paths'][0])
 
+# delete unwanted files
 for file in allfiles:
-	if (fs.FileExt(file) == cs_ext):
-		print Functions.CorrespondingVideoFileExists(fs.FileNameOnly(file), vid_exts, allfiles)
+    # if contact sheet
+    if (fs.FileExt(file) == cs_ext):
+        # make sure matching video file exists
+        if not fn.CorrespondingVideoFileExists(fs.FileNameOnly(file), vid_exts, allfiles):
+            # if no matching video file, delete
+            fs.DeleteFile(file)
+    # if is not contact sheet or video file, delete
+    elif fs.FileExt(file) not in vid_exts:
+        fs.DeleteFile(file)
 
-#	elif fs.FileExt(file) not in vid_exts:
-#		#fs.DeleteFile(file)
+# rename video file name and move to parent
+
 
 
 '''

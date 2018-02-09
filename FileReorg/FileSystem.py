@@ -1,5 +1,4 @@
 import os
-import LoadConfig
 from glob import glob
 
 def GetAllFiles(rootPath):
@@ -18,4 +17,4 @@ def FileExtx(filePath):
 
 def DeleteFile(filePath):
 	os.remove(filePath)
-	print 'del: ' + filePath;
+	print('del: ' + filePath)
