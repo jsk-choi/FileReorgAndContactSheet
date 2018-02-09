@@ -1,0 +1,12 @@
+{
+  "paths": [
+    "C:\\Users\\jchoi\\Desktop\\wip\\py\\fs"
+  ],
+  "video-ext": [
+    ".mp4",
+    ".mkv",
+    ".avi"
+  ],
+  "contact-ext": ".png",
+  "exclude-postfix": "-zz"
+}
