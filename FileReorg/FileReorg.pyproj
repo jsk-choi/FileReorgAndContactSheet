@@ -23,6 +23,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="__init__.py" />
+    <Compile Include="ClassFileInfo.py" />
     <Compile Include="Functions.py" />
     <Compile Include="Config.json" />
     <Compile Include="Main.py" />
