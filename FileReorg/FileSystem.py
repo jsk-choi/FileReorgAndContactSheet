@@ -12,9 +12,6 @@ def FileNameOnly(filePath):
 	filename, file_extension = os.path.splitext(filePath)
 	return filename
 
-def FileExtx(filePath):
-	return os.path.splitext(filePath)
-
 def DeleteFile(filePath):
 	os.remove(filePath)
 	print('del: ' + filePath)

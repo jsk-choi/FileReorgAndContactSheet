@@ -1,31 +1,49 @@
+import Config as conf
+import FileSystem as fs
+import Functions as fn
 from ClassFileInfo import *
 
-ddd = FileInfo('dur')
+config = conf.GetConfig()
+vid_exts = config['video-ext']
+cs_ext = config['contact-ext']
 
-#import Config as conf
-#import FileSystem as fs
-#import Functions as fn
+allfiles = fs.GetAllFiles(config['paths'][0])
 
-#config = conf.GetConfig()
-#vid_exts = config['video-ext']
-#cs_ext = config['contact-ext']
+# delete unwanted files
+for file in allfiles:
+	
+	fileinfo = FileInfo(file, conf.GetConfig()['paths'][0])
 
-#allfiles = fs.GetAllFiles(config['paths'][0])
+    # if contact sheet
+	if (fileinfo.extension == cs_ext):
+        # make sure matching video file exists
+		if not fn.CorrespondingVideoFileExists(fs.FileNameOnly(file), vid_exts, allfiles):
+            # if no matching video file, delete
+			fs.DeleteFile(file)
+    # if is not contact sheet or video file, delete
+	elif (fileinfo.extension not in vid_exts) or ('sample' in fileinfo.filename.lower()):
+		fs.DeleteFile(file)
 
-## delete unwanted files
-#for file in allfiles:
-#    # if contact sheet
-#    if (fs.FileExt(file) == cs_ext):
-#        # make sure matching video file exists
-#        if not fn.CorrespondingVideoFileExists(fs.FileNameOnly(file), vid_exts, allfiles):
-#            # if no matching video file, delete
-#            fs.DeleteFile(file)
-#    # if is not contact sheet or video file, delete
-#    elif fs.FileExt(file) not in vid_exts:
-#        fs.DeleteFile(file)
+# rename video file name and move to parent
+allfiles = fs.GetAllFiles(config['paths'][0])
 
-## rename video file name and move to parent
+# delete unwanted files
+for file in allfiles:
+	
+	fileinfo = FileInfo(file, conf.GetConfig()['paths'][0])
 
+	if fileinfo.isatroot or fileinfo.excludefilereorg: continue
+
+	uniqueiterator = ''
+	iterator = 0
+
+	newfilename = os.path.join(fileinfo.rootfolder, fileinfo.folder) + fileinfo.extension
+
+	while os.path.isfile(newfilename):
+		iterator += 1
+		newfilename = os.path.join(fileinfo.rootfolder, fileinfo.parentfoldername) + ("%02d" % (iterator,)) + fileinfo.extension
+	
+	fff = fileinfo
 
 
 #'''
