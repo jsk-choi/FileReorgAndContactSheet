@@ -14,4 +14,8 @@ def FileNameOnly(filePath):
 
 def DeleteFile(filePath):
 	os.remove(filePath)
-	print('del: ' + filePath)
+	print('del:\t' + filePath)
+
+def Movefile(src, dest):
+	os.rename(src, dest)
+	print('move:\t' + src + '\n\t' + dest)
