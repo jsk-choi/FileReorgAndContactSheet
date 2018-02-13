@@ -125,4 +125,4 @@ def help():
 	print prompt
 
 def TruncString(str, pad):
-	return ''.join([str[:pad], '.......', str[-pad:]])
+	return ''.join([str[:pad], '....', str[-pad:]])

@@ -14,7 +14,7 @@
     <Name>FileReorg</Name>
     <RootNamespace>PythonApplication</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>-a 1 -b C:\Users\jchoi\Desktop\wip\py\fs\__\_new</CommandLineArguments>
+    <CommandLineArguments>C:\Users\jchoi\Desktop\wip\py\fs</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -29,7 +29,6 @@
     <Compile Include="__init__.py" />
     <Compile Include="ClassFileInfo.py" />
     <Compile Include="Functions.py" />
-    <Compile Include="Setting.py" />
     <Compile Include="Main.py" />
     <Compile Include="Config.py" />
     <Compile Include="FileSystem.py" />

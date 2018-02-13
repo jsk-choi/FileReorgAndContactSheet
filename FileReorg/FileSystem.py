@@ -22,8 +22,9 @@ def FileNameOnly(filePath):
 
 def DeleteFile(filePath):
 	os.remove(filePath)
-	print('del:\t' + fn.TruncString(filePath, 30))
+	print('del:\t' + filePath)
 
 def Movefile(src, dest):
 	os.rename(src, dest)
-	print('move:\t' + fn.TruncString(src, 30) + '\n\t' + fn.TruncString(dest, 30))
+	#print('move:\t' + fn.TruncString(src, 20) + '\n\t' + fn.TruncString(dest, 15))
+	print(''.join(['move:\t', src, ' >>\n\t', dest]))
