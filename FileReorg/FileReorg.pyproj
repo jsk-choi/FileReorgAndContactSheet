@@ -29,7 +29,7 @@
     <Compile Include="__init__.py" />
     <Compile Include="ClassFileInfo.py" />
     <Compile Include="Functions.py" />
-    <Compile Include="Config.json" />
+    <Compile Include="Setting.py" />
     <Compile Include="Main.py" />
     <Compile Include="Config.py" />
     <Compile Include="FileSystem.py" />

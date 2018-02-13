@@ -1,12 +1,14 @@
+import os
 import sys
 
 import Config as conf
 import Functions as fn
 
-vid_exts = config['video-ext']
-cs_ext = config['contact-ext']
-
 # delete unwanted files
-for dir in config['paths']:
+for dir in conf.paths:
+	
 	fn.DeleteUnwatedFiles(dir)
-	fn.RenameMove(dir)
+
+	if conf.reorg:
+		fn.RenameMove(dir)
+

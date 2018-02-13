@@ -1,10 +1,16 @@
 import os
 from glob import glob
 
-config = {}
+import Functions as fn
 
 def GetAllFiles(rootPath):
-	return [y for x in os.walk(rootPath) for y in glob(os.path.join(x[0], '*.*'))]
+
+	walk = os.walk(rootPath)
+
+	for folder in walk:
+		for file in folder[2]:
+			yield os.path.join(folder[0], file)
+
 
 def FileExt(filePath):
 	filename, file_extension = os.path.splitext(filePath)
@@ -16,8 +22,8 @@ def FileNameOnly(filePath):
 
 def DeleteFile(filePath):
 	os.remove(filePath)
-	print('del:\t' + filePath)
+	print('del:\t' + fn.TruncString(filePath, 30))
 
 def Movefile(src, dest):
 	os.rename(src, dest)
-	print('move:\t' + src + '\n\t' + dest)
+	print('move:\t' + fn.TruncString(src, 30) + '\n\t' + fn.TruncString(dest, 30))

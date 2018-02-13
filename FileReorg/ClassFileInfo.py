@@ -7,12 +7,6 @@ class FileInfo:
 
 	def __init__(self, fullpath, workingfolder):
 
-		self.isvalid = True
-
-		if not os.path.isfile(fullpath):
-			self.isvalid = False
-			return
-
 		filenameArr = fullpath.split(os.sep)
 		 
 		self.rootfolder = workingfolder
