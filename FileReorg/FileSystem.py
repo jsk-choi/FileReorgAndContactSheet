@@ -1,6 +1,8 @@
 import os
 from glob import glob
 
+config = {}
+
 def GetAllFiles(rootPath):
 	return [y for x in os.walk(rootPath) for y in glob(os.path.join(x[0], '*.*'))]
 

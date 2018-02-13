@@ -1,4 +1,6 @@
 import json
 
+reorg = True
+
 def GetConfig():
-	return json.load(open('Config.json'))
+	conf = json.load(open('Config.json'))

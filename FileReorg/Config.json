@@ -1,6 +1,6 @@
 {
   "paths": [
-    "C:\\Users\\jchoi\\Desktop\\wip\\py\\fs"
+    "C:\\Users\\jchoi\\Desktop\\wip\\py\\fs\\__\\_new"
   ],
   "video-ext": [
     ".mp4",
@@ -8,5 +8,6 @@
     ".avi"
   ],
   "contact-ext": ".png",
-  "exclude-postfix": "-zz"
+  "exclude-postfix": "-zz",
+  "reorg": true
 }
