@@ -23,38 +23,33 @@ if cap.isOpened():
 	msecs = cap.get(cv2.CAP_PROP_POS_MSEC)
 	time_length = int(frames / fps)
 
-milliseconds = time_length * 1000
-milliseconds_increments = int((milliseconds * .9) / 24)
-milliseconds_increments_counter = int(milliseconds * .05)
-
-milliseconds_increments_counter = 0
+frame_increment = int((frames * 0.9) / 24)
+frame_counter = int(frames * 0.05)
 
 success = True
 
-cap.set(1, milliseconds_increments_counter)
-success, frame = cap.read()
-cv2.imwrite("frame_%d.jpg" % milliseconds_increments_counter, frame)
-milliseconds_increments_counter += 1000
+while success:
+	cap.set(1, frame_counter)
+	success, frame = cap.read()
+	if success:
+		cv2.imwrite("frame_%d.jpg" % frame_counter, frame)
+		frame_counter += frame_increment
+
+
 
 cap.set(1, milliseconds_increments_counter)
 success, frame = cap.read()
 cv2.imwrite("frame_%d.jpg" % milliseconds_increments_counter, frame)
-milliseconds_increments_counter += 1000
+milliseconds_increments_counter = 35000
 
 cap.set(1, milliseconds_increments_counter)
 success, frame = cap.read()
 cv2.imwrite("frame_%d.jpg" % milliseconds_increments_counter, frame)
-milliseconds_increments_counter += 1000
+milliseconds_increments_counter += 100
 
 cap.set(1, milliseconds_increments_counter)
 success, frame = cap.read()
 cv2.imwrite("frame_%d.jpg" % milliseconds_increments_counter, frame)
-milliseconds_increments_counter += 1000
-
-cap.set(1, milliseconds_increments_counter)
-success, frame = cap.read()
-cv2.imwrite("frame_%d.jpg" % milliseconds_increments_counter, frame)
-milliseconds_increments_counter += 1000
 
 
 while success:
