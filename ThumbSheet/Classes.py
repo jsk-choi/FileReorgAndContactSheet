@@ -5,11 +5,11 @@ class vid_attr:
 
 	def __init__(self, vid_name, horiz_ct, vert_ct, padding):
 
-		vidCap = cv2.VideoCapture(vid_name)
-		self.width = int(vidCap.get(cv2.CAP_PROP_FRAME_WIDTH))
-		self.height = int(vidCap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-		self.fps = int(vidCap.get(cv2.CAP_PROP_FPS))
-		self.frames = int(vidCap.get(cv2.CAP_PROP_FRAME_COUNT))
+		self.vid_cap = cv2.VideoCapture(vid_name)
+		self.width = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+		self.height = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+		self.fps = int(self.vid_cap.get(cv2.CAP_PROP_FPS))
+		self.frames = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_COUNT))
 		self.length = int(self.frames / self.fps)
 		self.totalthumbs = horiz_ct * vert_ct
 		self.frameinterval = int((self.frames * (1 - (padding * 2))) / self.totalthumbs)
@@ -20,10 +20,10 @@ class vid_attr:
 #	def __init__(self, vid_name):
 
 #		vidCap = cv2.VideoCapture(vid_name)
-#		self.width = int(vidCap.get(cv2.CAP_PROP_FRAME_WIDTH))
-#		self.height = int(vidCap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-#		self.fps = int(vidCap.get(cv2.CAP_PROP_FPS))
-#		self.frames = int(vidCap.get(cv2.CAP_PROP_FRAME_COUNT))
+#		self.width = int(vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+#		self.height = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+#		self.fps = int(vid_cap.get(cv2.CAP_PROP_FPS))
+#		self.frames = int(vid_cap.get(cv2.CAP_PROP_FRAME_COUNT))
 #		self.length = int(self.frames / self.fps)
 #		self.totalthumbs = horiz_ct * vert_ct
 #		self.frameinterval = int((self.frames * (1 - (padding * 2))) / self.totalthumbs)

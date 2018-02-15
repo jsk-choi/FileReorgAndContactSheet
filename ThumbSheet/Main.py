@@ -1,46 +1,34 @@
 import os
 import sys
 import cv2
+import collections
 
 import Classes as cl
-import Image
+import Image as img
 
-print "one"
+#Open the video file
+vid_attr = cl.vid_attr('ppil.mp4', 8, 6, 0.05)
 
-thumb_dict = {}
-thumb_dict[1] = "one"
-thumb_dict[2] = "two"
+frame_counter = vid_attr.startframe
 
-durr = list(thumb_dict.keys())
- 
+thumbs_dict = {}
+success = True
 
-#tc_img = Image.TimecodeImage(2974)
+for ii in range(1, vid_attr.totalthumbs + 1):
+	if not success:
+		break
 
-#cv2.imwrite("tc_img.png", tc_img)
+	vid_attr.vid_cap.set(1, frame_counter)
+	success, frame = vid_attr.vid_cap.read()
 
-#vid_attr = cl.vid_attr("big_buck_bunny.mp4", 8, 6, 0.05)
-
-#resize_ratio = (vid_attr.width * 0.35) / tc_img.shape[1]
-
-#tc_img_sized = cv2.resize(tc_img, (0,0), fx=resize_ratio, fy=resize_ratio) 
-
-#cv2.imwrite("tc_img_sized.png", tc_img_sized)
-
-#l_img = cv2.flip(cv2.imread("thumb_01.png"), -1)
-#s_img = cv2.flip(tc_img_sized, -1)
-
-#x_offset = y_offset = 0
-#l_img[y_offset: s_img.shape[0], x_offset: s_img.shape[1]] = s_img
-
-#l_img = cv2.flip(l_img, -1)
-#cv2.imwrite("tc_img_w_tc.png", l_img)
+	if success:
+		print "frame grabbed %d" % frame_counter
+		thumbs_dict[frame_counter] = img.overlay_timecode_on_thumbnail(int(frame_counter / vid_attr.fps), frame)
+		frame_counter += vid_attr.frameinterval
 
 
-#l_img = cv2.imread("thumb_01.png")
+for key in collections.OrderedDict(sorted(thumbs_dict.items())):
+	filename = "frame_%d.jpg" % key
+	print "write " + filename
+	cv2.imwrite("frame_%d.jpg" % key, thumbs_dict[key])
 
-#vidCap = cv2.VideoCapture("big_buck_bunny.mp4")
-
-#x_offset = y_offset = 2
-#l_img[y_offset:y_offset + s_img.shape[0], x_offset:x_offset + s_img.shape[1]] = s_img
-
-#cv2.imwrite("aaaaa.png", l_img)
