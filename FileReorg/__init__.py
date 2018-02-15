@@ -1,1 +1,1 @@
-from ClassFileInfo import *
+from FileReorg.ClassFileInfo import *
