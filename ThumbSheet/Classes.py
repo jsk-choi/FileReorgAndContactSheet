@@ -1,27 +1,34 @@
 import os
+import math
 
 import numpy as np
 import cv2
 
 class vid_attr:
 
-	def __init__(self, vid_name, horiz_ct, vert_ct, padding):
+	def __init__(self, vid_name, horiz_ct, vert_ct, vid_pad):
 
 		self.vid_cap = cv2.VideoCapture(vid_name)
 		self.width = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 		self.height = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-		self.fps = int(self.vid_cap.get(cv2.CAP_PROP_FPS))
+		self.fps = self.vid_cap.get(cv2.CAP_PROP_FPS)
+		self.fps_string = \
+			str(math.floor(self.fps * 10 ** 1) / 10 ** 1) \
+			if "." in str(self.fps) \
+			else str(self.fps)
+
 		self.frames = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_COUNT))
-		self.length = int(self.frames / self.fps)
+		self.length = int(self.frames / self.vid_cap.get(cv2.CAP_PROP_FPS))
 		self.length_string = ""
 		self.totalthumbs = horiz_ct * vert_ct
-		self.frameinterval = int((self.frames * (1 - (padding * 2))) / self.totalthumbs)
-		self.startframe = int(self.frames * padding)
+		self.frameinterval = int((self.frames * (1 - (vid_pad * 2))) / self.totalthumbs)
+		self.startframe = int(self.frames * vid_pad)
 		self.filename = vid_name.split(os.sep)[-1]
 		self.size = os.path.getsize(vid_name)
 		self.size_string = ""
 
-		# self.length_string
+
+		# self.length_strigngit
 		m, s = divmod(self.length, 60)
 		h, m = divmod(m, 60)
 
@@ -52,5 +59,5 @@ class vid_attr:
 #		self.frames = int(vid_cap.get(cv2.CAP_PROP_FRAME_COUNT))
 #		self.length = int(self.frames / self.fps)
 #		self.totalthumbs = horiz_ct * vert_ct
-#		self.frameinterval = int((self.frames * (1 - (padding * 2))) / self.totalthumbs)
-#		self.startframe = int(self.frames * padding)
+#		self.frameinterval = int((self.frames * (1 - (vid_pad * 2))) / self.totalthumbs)
+#		self.startframe = int(self.frames * vid_pad)

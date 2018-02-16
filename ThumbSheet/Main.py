@@ -6,52 +6,54 @@ import collections
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
+import Capture as cap
 import Config as conf
 import Classes as cl
 import Image as img
 
+filename = "ppil.mp4"
 
-vid_attr = cl.vid_attr('ppil.mp4', conf.thumbs_horizontal, conf.thumbs_vertical, conf.video_pad)
+vid_attr = cl.vid_attr(filename, conf.thumbs_horizontal, conf.thumbs_vertical, conf.video_pad)
 
+header_height, thumb_height, template_image = img.create_image_template(filename)
+thumbs = cap.capture_thumbnails(filename)
 
-#                       w     h
-im = Image.new('RGBA', (200, 1000), conf.background_color)
+conf.thumb_height = thumb_height
 
-draw = ImageDraw.Draw(im)
-draw.text((20, 150), 'Hello', fill='red')
-courier_font = ImageFont.truetype(os.path.join(r'courbd.ttf'), 13)
-draw.text((100, 150), 'Face', fill='black', font=courier_font)
+counter = 0
+thumbs_keys = list(thumbs.keys())
+thumbnail_scale = (thumb_height * 1.0) / thumbs[thumbs_keys[0]].shape[0]
+x_offset = conf.thumb_spacing
+y_offset = header_height
 
-img_ = np.array(im)
+for y in range (1, conf.thumbs_vertical + 1):
 
-cv2.imwrite("img_.png", img_)
+	y_offset += conf.thumb_spacing + conf.thumb_height
 
+	for x in range(1, conf.thumbs_horizontal):
 
+		thumbnail = thumbs[thumbs_keys[counter]]
+		thumbnail_scaled = cv2.resize(thumbnail, (0, 0), fx = thumbnail_scale, fy = thumbnail_scale, interpolation = cv2.INTER_AREA)
+		template_image[y_offset: y_offset + thumbnail_scaled.shape[0], x_offset: x_offset + thumbnail_scaled.shape[1]] = thumbnail_scaled
+		
+		x_offset += (conf.thumb_spacing * 2) + conf.thumb_width
+		counter += 1
 
+	x_offset = conf.thumb_spacing
 
-## open the video file
-#vid_attr = cl.vid_attr('big_buck_bunny.mp4', conf.thumbs_horizontal, conf.thumbs_vertical, conf.video_pad)
+cv2.imwrite("zzzooo.png", template_image)
 
-#frame_counter = vid_attr.startframe
+#for key in thumbs:
 
-#thumbs_dict = {}
-#success = True
+#	thumb_scale = (thumb_height * 1.0) / thumbs[key].shape[0]
+#	scaled_thumb = cv2.resize(thumbs[key], (0, 0), fx = thumb_scale, fy = thumb_scale, interpolation = cv2.INTER_AREA)
 
-#for ii in range(1, vid_attr.totalthumbs + 1):
-#	if not success:
-#		break
-
-#	vid_attr.vid_cap.set(1, frame_counter)
-#	success, frame = vid_attr.vid_cap.read()
-
-#	if success:
-#		print "frame grabbed %d" % frame_counter
-#		thumbs_dict[frame_counter] = img.overlay_timecode_on_thumbnail(int(frame_counter / vid_attr.fps), frame)
-#		frame_counter += vid_attr.frameinterval
-
-
-#for key in collections.OrderedDict(sorted(thumbs_dict.items())):
-#	filename = "frame_%d.jpg" % key
-#	print "write " + filename
-#	cv2.imwrite("frame_%d.jpg" % key, thumbs_dict[key])
+#	cv2.imwrite("zzz templ.png", template_image)
+#	cv2.imwrite("zzz thumb.png", scaled_thumb)
+	
+#	x_offset = conf.thumb_spacing
+#	y_offset = header_height
+#	template_image[y_offset: y_offset + scaled_thumb.shape[0], x_offset: x_offset + scaled_thumb.shape[1]] = scaled_thumb
+#	cv2.imwrite(str(key) + ".png", template_image)
+#	break
 

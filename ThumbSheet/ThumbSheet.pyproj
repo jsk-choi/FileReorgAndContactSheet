@@ -24,6 +24,7 @@
   <ItemGroup>
     <Compile Include="Classes.py" />
     <Compile Include="Config.py" />
+    <Compile Include="Capture.py" />
     <Compile Include="Image.py" />
     <Compile Include="Main.py" />
   </ItemGroup>

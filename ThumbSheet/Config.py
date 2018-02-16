@@ -1,6 +1,10 @@
 width = 1200
 thumbs_horizontal = 8
-thumbs_vertical = 6
-space_px = 10
+thumbs_vertical = 1
 video_pad = 0.05
 background_color = (244, 66, 232)
+text_font = "courbd.ttf"
+text_font_size = 13
+thumb_spacing = 5
+thumb_width = (width - ((thumbs_horizontal * thumb_spacing) + thumb_spacing)) / thumbs_horizontal
+thumb_height = 0

@@ -1,5 +1,48 @@
-import numpy as np
+import os
+import sys
 import cv2
+import collections
+
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont
+
+import Config as conf
+import Classes as cl
+
+def create_image_template(filename):
+
+	vid_attr = cl.vid_attr(filename, conf.thumbs_horizontal, conf.thumbs_vertical, conf.video_pad)
+
+	thumb_height = int((vid_attr.height / (vid_attr.width * 1.0)) * conf.thumb_width) + conf.thumb_spacing
+	im_header = im_height = 0
+
+	im_header += conf.thumb_spacing						# pad
+	im_header += int(conf.text_font_size * 1.5)			# first line
+	im_header += int(conf.text_font_size * 1.5)			# second line
+	im_header += conf.thumb_spacing						# pad
+	im_height += (thumb_height * conf.thumbs_vertical)	# all the thumbs
+
+	im_height += 1000
+
+	im = Image.new('RGBA', (conf.width, im_header + im_height), conf.background_color)
+	draw = ImageDraw.Draw(im)
+	courier_font = ImageFont.truetype(os.path.join(conf.text_font), conf.text_font_size)
+
+	draw_text = vid_attr.filename
+	pos_x = pos_y = int(conf.text_font_size / 2)
+	draw.text((pos_x, pos_y), draw_text, fill='black', font=courier_font)
+
+	draw_text = "{0}, {1}x{2}, {3}fps, {4}".format(\
+		vid_attr.size_string, \
+		vid_attr.width, \
+		vid_attr.height, \
+		vid_attr.fps_string, \
+		vid_attr.length_string)
+
+	pos_y += int(conf.text_font_size * 1.5)
+	draw.text((pos_x, pos_y), draw_text, fill='black', font=courier_font)
+
+	return im_header, thumb_height, cv2.cvtColor(np.array(im), cv2.COLOR_BGRA2BGR)
 
 def overlay_timecode_on_thumbnail(time_in_seconds, thumbnail):
 	
