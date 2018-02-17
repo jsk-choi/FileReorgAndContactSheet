@@ -9,13 +9,14 @@ class vid_attr:
 	def __init__(self, vid_name, horiz_ct, vert_ct, vid_pad):
 
 		self.vid_cap = cv2.VideoCapture(vid_name)
+		
 		self.width = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 		self.height = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 		self.fps = self.vid_cap.get(cv2.CAP_PROP_FPS)
 		self.fps_string = \
 			str(math.floor(self.fps * 10 ** 1) / 10 ** 1) \
-			if "." in str(self.fps) \
-			else str(self.fps)
+			if "." in str(self.fps) and ".0" not in str(self.fps) \
+			else str(int(self.fps))
 
 		self.frames = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_COUNT))
 		self.length = int(self.frames / self.vid_cap.get(cv2.CAP_PROP_FPS))
@@ -26,6 +27,8 @@ class vid_attr:
 		self.filename = vid_name.split(os.sep)[-1]
 		self.size = os.path.getsize(vid_name)
 		self.size_string = ""
+
+		# calculate thumbnail size
 
 
 		# self.length_strigngit

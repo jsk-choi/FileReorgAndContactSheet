@@ -13,23 +13,21 @@ def create_image_template(filename):
 
 	vid_attr = cl.vid_attr(filename, conf.thumbs_horizontal, conf.thumbs_vertical, conf.video_pad)
 
-	thumb_height = int((vid_attr.height / (vid_attr.width * 1.0)) * conf.thumb_width) + conf.thumb_spacing
+	thumb_height = int((vid_attr.height / (vid_attr.width * 1.0)) * conf.thumb_width)
 	im_header = im_height = 0
 
 	im_header += conf.thumb_spacing						# pad
 	im_header += int(conf.text_font_size * 1.5)			# first line
-	im_header += int(conf.text_font_size * 1.5)			# second line
-	im_header += conf.thumb_spacing						# pad
-	im_height += (thumb_height * conf.thumbs_vertical)	# all the thumbs
-
-	im_height += 1000
+	im_header += int(conf.text_font_size)				# second line
+	im_header += int(conf.thumb_spacing / 2)			# pad
+	im_height += ((thumb_height + conf.thumb_spacing) * conf.thumbs_vertical) + conf.thumb_spacing	# all the thumbs
 
 	im = Image.new('RGBA', (conf.width, im_header + im_height), conf.background_color)
 	draw = ImageDraw.Draw(im)
 	courier_font = ImageFont.truetype(os.path.join(conf.text_font), conf.text_font_size)
 
 	draw_text = vid_attr.filename
-	pos_x = pos_y = int(conf.text_font_size / 2)
+	pos_x = pos_y = conf.thumb_spacing
 	draw.text((pos_x, pos_y), draw_text, fill='black', font=courier_font)
 
 	draw_text = "{0}, {1}x{2}, {3}fps, {4}".format(\

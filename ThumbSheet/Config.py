@@ -1,6 +1,6 @@
 width = 1200
 thumbs_horizontal = 8
-thumbs_vertical = 1
+thumbs_vertical = 8
 video_pad = 0.05
 background_color = (244, 66, 232)
 text_font = "courbd.ttf"
