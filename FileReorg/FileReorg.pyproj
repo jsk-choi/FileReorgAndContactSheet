@@ -6,8 +6,7 @@
     <ProjectGuid>f2b074c3-688f-4fa8-9a26-9a5bcc7fab22</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>Reorg.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -15,7 +14,8 @@
     <Name>FileReorg</Name>
     <RootNamespace>PythonApplication</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>C:\Users\jchoi\Desktop\wip\py\fs</CommandLineArguments>
+    <CommandLineArguments>
+    </CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

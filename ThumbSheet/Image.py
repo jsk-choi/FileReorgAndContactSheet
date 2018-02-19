@@ -8,6 +8,49 @@ from PIL import Image, ImageDraw, ImageFont
 
 import Config as conf
 import Classes as cl
+import Image as img
+from ClassFileInfo import *
+import Capture as cap
+import FileSystem as fs	
+import Print as prn
+
+def create_contact_sheet(filename):
+
+	file_info = FileInfo(filename, '')
+
+	prn.print_("start: ".ljust(8) + file_info.fullfilename)
+
+	vid_attr = cl.vid_attr(file_info.fullfilename, conf.thumbs_horizontal, conf.thumbs_vertical, conf.video_pad)
+
+	header_height, thumb_height, template_image = img.create_image_template(file_info.fullfilename)
+	thumbs = cap.capture_thumbnails(file_info.fullfilename)
+
+	conf.thumb_height = thumb_height
+
+	counter = 0
+	thumbs_keys = list(thumbs.keys())
+	thumbnail_scale = (conf.thumb_height * 1.0) / thumbs[thumbs_keys[0]].shape[0]
+	x_offset = conf.thumb_spacing
+	y_offset = header_height
+
+	for y in range (1, conf.thumbs_vertical + 1):
+
+		for x in range(1, conf.thumbs_horizontal + 1):
+
+			thumbnail = thumbs[thumbs_keys[counter]]
+			thumbnail_scaled = cv2.resize(thumbnail, (conf.thumb_width, conf.thumb_height), interpolation = cv2.INTER_AREA)
+			template_image[y_offset: y_offset + thumbnail_scaled.shape[0], x_offset: x_offset + thumbnail_scaled.shape[1]] = thumbnail_scaled		
+
+			x_offset += conf.thumb_spacing + conf.thumb_width
+			counter += 1
+
+		x_offset = conf.thumb_spacing
+		y_offset += (conf.thumb_height + conf.thumb_spacing)
+
+	cs_filename = file_info.fullfilename[:-len(file_info.extension)] + conf.contact_ext
+	cv2.imwrite(cs_filename, template_image)
+	prn.print_("done: ".ljust(8) + cs_filename)
+	prn.print_("")
 
 def create_image_template(filename):
 

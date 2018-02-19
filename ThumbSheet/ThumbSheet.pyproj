@@ -6,8 +6,7 @@
     <ProjectGuid>21e5a759-c256-46d5-b69b-14469129765b</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>Main.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <SearchPath>..\FileReorg\</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>ThumbSheet</Name>
@@ -24,10 +23,16 @@
   <ItemGroup>
     <Compile Include="Print.py" />
     <Compile Include="Classes.py" />
-    <Compile Include="Config.py" />
     <Compile Include="Capture.py" />
     <Compile Include="Image.py" />
     <Compile Include="Main.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FileReorg\FileReorg.pyproj">
+      <Name>FileReorg</Name>
+      <Project>{f2b074c3-688f-4fa8-9a26-9a5bcc7fab22}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

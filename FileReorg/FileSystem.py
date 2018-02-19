@@ -27,4 +27,4 @@ def DeleteFile(filePath):
 def Movefile(src, dest):
 	os.rename(src, dest)
 	#print('move:\t' + fn.TruncString(src, 20) + '\n\t' + fn.TruncString(dest, 15))
-	print(''.join(['move:\t', src, ' >>\n\t', dest]))
+	print(''.join(['move:\t', src, ' -->\n\t', dest]))
