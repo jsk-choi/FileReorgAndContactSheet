@@ -1,10 +1,10 @@
-width = 1200
+width = 3000
 thumbs_horizontal = 8
 thumbs_vertical = 8
 video_pad = 0.05
 background_color = (244, 66, 232)
 text_font = "courbd.ttf"
-text_font_size = 13
-thumb_spacing = 5
-thumb_width = (width - ((thumbs_horizontal * thumb_spacing) + thumb_spacing)) / thumbs_horizontal
+text_font_size = 25
+thumb_spacing = 10
+thumb_width = int(round((width * 1.0 - ((thumbs_horizontal * thumb_spacing) + thumb_spacing)) / thumbs_horizontal))
 thumb_height = 0

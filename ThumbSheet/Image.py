@@ -13,14 +13,14 @@ def create_image_template(filename):
 
 	vid_attr = cl.vid_attr(filename, conf.thumbs_horizontal, conf.thumbs_vertical, conf.video_pad)
 
-	thumb_height = int((vid_attr.height / (vid_attr.width * 1.0)) * conf.thumb_width)
+	thumb_height = int(round((vid_attr.height / (vid_attr.width * 1.0)) * conf.thumb_width))
 	im_header = im_height = 0
 
 	im_header += conf.thumb_spacing						# pad
 	im_header += int(conf.text_font_size * 1.5)			# first line
 	im_header += int(conf.text_font_size)				# second line
 	im_header += int(conf.thumb_spacing / 2)			# pad
-	im_height += ((thumb_height + conf.thumb_spacing) * conf.thumbs_vertical) + conf.thumb_spacing	# all the thumbs
+	im_height += ((thumb_height + conf.thumb_spacing) * conf.thumbs_vertical) + int(conf.thumb_spacing)	# all the thumbs
 
 	im = Image.new('RGBA', (conf.width, im_header + im_height), conf.background_color)
 	draw = ImageDraw.Draw(im)
@@ -61,8 +61,6 @@ def overlay_timecode_on_thumbnail(time_in_seconds, thumbnail):
 	# overlay timecode image on thumbnail
 	x_offset = y_offset = 0
 	l_img[y_offset: s_img.shape[0], x_offset: s_img.shape[1]] = s_img
-
-	print 'overlay done %d' % time_in_seconds
 
 	# flip thumbnail again
 	return cv2.flip(l_img, -1)

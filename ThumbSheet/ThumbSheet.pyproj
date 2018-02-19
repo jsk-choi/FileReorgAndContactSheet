@@ -22,6 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Print.py" />
     <Compile Include="Classes.py" />
     <Compile Include="Config.py" />
     <Compile Include="Capture.py" />
