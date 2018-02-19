@@ -1,6 +1,6 @@
 # reorg config
 paths = [r'C:\Users\jchoi\Desktop\wip\py\fs']
-video_ext = [".mp4",".mkv",".avi"]
+video_ext = [".mp4",".mkv",".avi", ".mov"]
 contact_ext = ".png"
 exclude_postfix = "-zz"
 reorg = True

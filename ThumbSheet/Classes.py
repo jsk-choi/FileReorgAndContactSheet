@@ -28,9 +28,6 @@ class vid_attr:
 		self.size = os.path.getsize(vid_name)
 		self.size_string = ""
 
-		# calculate thumbnail size
-
-
 		# self.length_strigngit
 		m, s = divmod(self.length, 60)
 		h, m = divmod(m, 60)
@@ -49,18 +46,3 @@ class vid_attr:
 			self.size_string = "%dMB" % int(self.size / 1048576.0)
 		else:
 			self.size_string = "%dKB" % int(self.size / 1024.0)
-
-
-#class img_attr:
-
-#	def __init__(self, vid_name):
-
-#		vidCap = cv2.VideoCapture(vid_name)
-#		self.width = int(vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-#		self.height = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-#		self.fps = int(vid_cap.get(cv2.CAP_PROP_FPS))
-#		self.frames = int(vid_cap.get(cv2.CAP_PROP_FRAME_COUNT))
-#		self.length = int(self.frames / self.fps)
-#		self.totalthumbs = horiz_ct * vert_ct
-#		self.frameinterval = int((self.frames * (1 - (vid_pad * 2))) / self.totalthumbs)
-#		self.startframe = int(self.frames * vid_pad)
