@@ -6,7 +6,9 @@ import Classes as cl
 import Image as img
 import Print as prt
 
-def capture_thumbnails(vid_attr):
+def capture_thumbnails(filename):
+	# open the video file
+	vid_attr = cl.vid_attr(filename, conf.thumbs_horizontal, conf.thumbs_vertical, conf.video_pad)
 
 	# starting frame
 	frame_counter = vid_attr.startframe

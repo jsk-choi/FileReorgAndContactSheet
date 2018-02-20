@@ -7,6 +7,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "FileReorg", "FileReorg\File
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ThumbSheet", "ThumbSheet\ThumbSheet.pyproj", "{21E5A759-C256-46D5-B69B-14469129765B}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ReorgAndThumbs", "FileReorgAndContactSheet\ReorgAndThumbs.pyproj", "{EBE087CD-3DA4-4E04-BEBE-C02D455886FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,8 @@ Global
 		{F2B074C3-688F-4FA8-9A26-9A5BCC7FAB22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21E5A759-C256-46D5-B69B-14469129765B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{21E5A759-C256-46D5-B69B-14469129765B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBE087CD-3DA4-4E04-BEBE-C02D455886FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBE087CD-3DA4-4E04-BEBE-C02D455886FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
