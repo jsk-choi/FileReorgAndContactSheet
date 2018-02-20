@@ -6,9 +6,10 @@ done:
 	rtprint.py
 	video_capture.py
 	reorg.py
+	thumbs.py
 
 todo:
 
 	functions.py
 	imaging.py
-	thumbs.py
+	

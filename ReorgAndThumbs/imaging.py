@@ -6,69 +6,70 @@ import collections
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-import Config as conf
-import Classes as cl
-import Image as img
-from ClassFileInfo import *
-import Capture as cap
-import FileSystem as fs	
-import Print as prn
+from classes import file_info, vid_attribute
+
+import file_system as fs	
+import imaging as img	
+import rtconfig as cf	
+import rtprint as prn	
+import video_capture as cap	
 
 def create_contact_sheet(file_info):
 
 	prn.print_("start: ".ljust(8) + file_info.fullfilename)
 
-	vid_attr = cl.vid_attr(file_info.fullfilename, conf.thumbs_horizontal, conf.thumbs_vertical, conf.video_pad)
+	vid_attr = cl.vid_attr(file_info.fullfilename, cf.thumbs_horizontal, cf.thumbs_vertical, cf.video_pad)
 
 	header_height, thumb_height, template_image = img.create_image_template(file_info.fullfilename)
 	thumbs = cap.capture_thumbnails(file_info.fullfilename)
 
-	conf.thumb_height = thumb_height
+	cf.thumb_height = thumb_height
 
 	counter = 0
 	thumbs_keys = list(thumbs.keys())
-	thumbnail_scale = (conf.thumb_height * 1.0) / thumbs[thumbs_keys[0]].shape[0]
-	x_offset = conf.thumb_spacing
+	thumbnail_scale = (cf.thumb_height * 1.0) / thumbs[thumbs_keys[0]].shape[0]
+	x_offset = cf.thumb_spacing
 	y_offset = header_height
 
-	for y in range (1, conf.thumbs_vertical + 1):
+	for y in range (1, cf.thumbs_vertical + 1):
 
-		for x in range(1, conf.thumbs_horizontal + 1):
+		for x in range(1, cf.thumbs_horizontal + 1):
 
 			thumbnail = thumbs[thumbs_keys[counter]]
-			thumbnail_scaled = cv2.resize(thumbnail, (conf.thumb_width, conf.thumb_height), interpolation = cv2.INTER_AREA)
+			thumbnail_scaled = cv2.resize(thumbnail, (cf.thumb_width, cf.thumb_height), interpolation = cv2.INTER_AREA)
 			template_image[y_offset: y_offset + thumbnail_scaled.shape[0], x_offset: x_offset + thumbnail_scaled.shape[1]] = thumbnail_scaled		
 
-			x_offset += conf.thumb_spacing + conf.thumb_width
+			x_offset += cf.thumb_spacing + cf.thumb_width
 			counter += 1
 
-		x_offset = conf.thumb_spacing
-		y_offset += (conf.thumb_height + conf.thumb_spacing)
+		x_offset = cf.thumb_spacing
+		y_offset += (cf.thumb_height + cf.thumb_spacing)
 
-	cs_filename = file_info.fullfilename[:-len(file_info.extension)] + conf.contact_ext
+	cs_filename = file_info.fullfilename[:-len(file_info.extension)] + cf.contact_ext
 	cv2.imwrite(cs_filename, template_image)
 	prn.print_("done: ".ljust(8) + cs_filename)
 	prn.print_("")
 
 def create_image_template(filename):
 
-	vid_attr = cl.vid_attr(filename, conf.thumbs_horizontal, conf.thumbs_vertical, conf.video_pad)
+	file_nfo = file_info(filename, "")
+	vid_attr = vid_attribute(file_nfo)
 
-	thumb_height = int(round((vid_attr.height / (vid_attr.width * 1.0)) * conf.thumb_width))
+	thumb_height = int(round((vid_attr.height / (vid_attr.width * 1.0)) * cf.thumb_width))
 	im_header = im_height = 0
 
-	im_header += conf.thumb_spacing						# pad
-	im_header += int(conf.text_font_size * 1.5)			# first line
-	im_header += int(conf.text_font_size)				# second line
-	im_header += int(conf.thumb_spacing / 2)			# pad
-	im_height += ((thumb_height + conf.thumb_spacing) * conf.thumbs_vertical) + int(conf.thumb_spacing)	# all the thumbs
+	im_header += cf.thumb_spacing						# pad
+	im_header += int(cf.text_font_size * 1.5)			# first line
+	im_header += int(cf.text_font_size)				# second line
+	im_header += int(cf.thumb_spacing / 2)			# pad
+	im_height += ((thumb_height + cf.thumb_spacing) * cf.thumbs_vertical) + int(cf.thumb_spacing)	# all the thumbs
 
-	im = Image.new('RGBA', (conf.width, im_header + im_height), conf.background_color)
+	im = Image.new('RGBA', (cf.width, im_header + im_height), cf.background_color)
 	draw = ImageDraw.Draw(im)
-	courier_font = ImageFont.truetype(os.path.join(conf.text_font), conf.text_font_size)
+	courier_font = ImageFont.truetype(os.path.join(cf.text_font), cf.text_font_size)
 
 	draw_text = vid_attr.filename
-	pos_x = pos_y = conf.thumb_spacing
+	pos_x = pos_y = cf.thumb_spacing
 	draw.text((pos_x, pos_y), draw_text, fill='black', font=courier_font)
 
 	draw_text = "{0}, {1}x{2}, {3}fps, {4}".format(\
@@ -78,7 +79,7 @@ def create_image_template(filename):
 		vid_attr.fps_string, \
 		vid_attr.length_string)
 
-	pos_y += int(conf.text_font_size * 1.5)
+	pos_y += int(cf.text_font_size * 1.5)
 	draw.text((pos_x, pos_y), draw_text, fill='black', font=courier_font)
 
 	return im_header, thumb_height, cv2.cvtColor(np.array(im), cv2.COLOR_BGRA2BGR)

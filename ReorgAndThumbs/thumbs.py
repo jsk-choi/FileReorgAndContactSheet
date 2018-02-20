@@ -1,39 +1,32 @@
 import os
 import sys
-import cv2
-import collections
 
-import numpy as np
-from PIL import Image, ImageDraw, ImageFont
-
-sys.path.append("..{0}FileReorg".format(os.path.sep))
-
-from ClassFileInfo import *
-
-import Capture as cap
-import Config as conf
-import FileSystem as fs	
-import Functions as fn
-import Image as img
-import Print as prn
+from classes import *
+import file_system as fs
+import imaging as img
+import rtconfig as cf
+import rtfunctions as fn
+import rtprint as pr
 
 if (len(sys.argv) > 1) and os.path.isdir(sys.argv[1]):
-	conf.paths = [sys.argv[1].strip()]
+	cf.paths = [sys.argv[1].strip()]
+else:
+	pr.print_("Supplied path not recognized as a valid folder: {0}".format(sys.argv[1]))
+	sys.exit()
 
-for dir in conf.paths:
+for dir in cf.paths:
 
-	files = list(fs.GetAllFiles(dir))
+	files = list(fs.get_all_files(dir))
 
 	for file in files:
 
-		file_info = FileInfo(file, dir)
+		file_nfo = file_info(file, dir)
 
-		if file_info.extension in conf.video_ext:
+		if file_nfo.extension in cf.video_ext:
 
-			if not fn.CorrespondingContactSheetExists(os.path.join(file_info.folder, fs.FileNameOnly(file_info.filename)), conf.contact_ext, files):
+			if not fn.CorrespondingContactSheetExists(os.path.join(file_nfo.folder, fs.FileNameOnly(file_nfo.filename)), cf.contact_ext, files):
 
 				try:
-					img.create_contact_sheet(file_info.fullfilename)
+					img.create_contact_sheet(file_nfo.fullfilename)
 				except:
-					prn.print_("Error: " + str(sys.exc_info()[1]))
-					prn.print_("\n\n")
+					pr.print_("Error: {0}{1}{1}".format(str(sys.exc_info()[1]), "\n"))
