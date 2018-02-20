@@ -1,14 +1,10 @@
 import collections
 import sys
 
-import Config as conf
-import Classes as cl
-import Image as img
-import Print as prt
+import imaging as img
+import rtprint as pr
 
-def capture_thumbnails(filename):
-	# open the video file
-	vid_attr = cl.vid_attr(filename, conf.thumbs_horizontal, conf.thumbs_vertical, conf.video_pad)
+def capture_thumbnails(vid_attr):
 
 	# starting frame
 	frame_counter = vid_attr.startframe
@@ -29,7 +25,7 @@ def capture_thumbnails(filename):
 			# move frame location forward
 			frame_counter += vid_attr.frameinterval
 			# print progress
-			prt.print_progress(ii, vid_attr.totalthumbs)
+			pr.print_progress(ii, vid_attr.totalthumbs)
 		else:
 			break
 

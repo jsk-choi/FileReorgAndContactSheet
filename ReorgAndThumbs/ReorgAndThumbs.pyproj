@@ -6,8 +6,7 @@
     <ProjectGuid>ebe087cd-3da4-4e04-bebe-c02d455886fe</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>rtprint.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -28,13 +27,14 @@
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="_track_.txt" />
     <Compile Include="classes.py" />
-    <Compile Include="config.py" />
+    <Compile Include="rtconfig.py" />
     <Compile Include="file_system.py" />
-    <Compile Include="functions.py" />
+    <Compile Include="rtfunctions.py" />
     <Compile Include="imaging.py" />
     <Compile Include="thumbs.py" />
-    <Compile Include="print.py" />
+    <Compile Include="rtprint.py" />
     <Compile Include="reorg.py" />
     <Compile Include="video_capture.py" />
     <Compile Include="__init__.py" />

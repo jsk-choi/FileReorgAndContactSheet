@@ -28,7 +28,7 @@ class vid_attr:
 		self.size = os.path.getsize(vid_name)
 		self.size_string = ""
 
-		# self.length_strigngit
+		# self.length_string
 		m, s = divmod(self.length, 60)
 		h, m = divmod(m, 60)
 
@@ -61,6 +61,7 @@ class file_info:
 		self.excludefilereorg = fn.ExcludeInFileReorg(self.fullfilename)
 
 		self.isatroot = self.rootfolder == self.folder;
+
 		if self.isatroot: 
 			return
 		

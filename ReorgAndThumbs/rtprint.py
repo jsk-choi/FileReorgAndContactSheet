@@ -1,9 +1,4 @@
-import collections
 import sys
-
-import Config as conf
-import Classes as cl
-import Image as img
 
 def print_ (out_string):
 	if str(out_string).endswith('\n') or str(out_string).endswith('\r'):

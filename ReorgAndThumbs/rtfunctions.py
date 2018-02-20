@@ -47,7 +47,6 @@ def RenameMove(workingdir):
 		if not ExcludeInFileReorg(dir):
 			shutil.rmtree(os.path.join(workingdir, dir))
 
-
 def DeleteUnwatedFiles(workingdir):
 
 	allfiles = list(fs.GetAllFiles(workingdir))
@@ -66,7 +65,6 @@ def DeleteUnwatedFiles(workingdir):
 		# if is not contact sheet or video file, delete
 		elif (fileinfo.extension not in conf.video_ext) or ('sample' in fileinfo.filename.lower()):
 			fs.DeleteFile(file)
-
 
 def CorrespondingVideoFileExists(cs_fn, vid_exts, all_files):
 

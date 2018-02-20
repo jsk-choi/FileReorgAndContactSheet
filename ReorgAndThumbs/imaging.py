@@ -106,7 +106,6 @@ def overlay_timecode_on_thumbnail(time_in_seconds, thumbnail):
 	# flip thumbnail again
 	return cv2.flip(l_img, -1)
 
-
 def timecode_image(seconds):
 
 	m, s = divmod(seconds, 60)
