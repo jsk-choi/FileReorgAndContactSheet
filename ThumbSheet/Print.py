@@ -5,13 +5,13 @@ import Config as conf
 import Classes as cl
 import Image as img
 
-def print_ (out_string):
+def print_(out_string):
 	if str(out_string).endswith('\n') or str(out_string).endswith('\r'):
 		sys.stdout.write(out_string)
 	else:
 		sys.stdout.write(out_string + '\n')
 
-def print_ (topic, out_string, log = False):
+def print_(topic, out_string, log = False):
 	message = topic.strip().ljust(10) + ": " + out_string.strip()
 	if str(out_string).endswith('\n') or str(out_string).endswith('\r'):
 		sys.stdout.write(message)
