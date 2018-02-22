@@ -18,7 +18,7 @@ def create_contact_sheet(filename):
 
 	file_info = FileInfo(filename, '')
 
-	prn.print_("start", file_info.fullfilename)
+	prn.print_(file_info.fullfilename, "start")
 
 	vid_attr = cl.vid_attr(file_info.fullfilename, conf.thumbs_horizontal, conf.thumbs_vertical, conf.video_pad)
 
@@ -53,7 +53,7 @@ def create_contact_sheet(filename):
 
 	cs_filename = file_info.fullfilename[:-len(file_info.extension)] + conf.contact_ext
 	cv2.imwrite(cs_filename, template_image)
-	prn.print_("created", cs_filename, True)
+	prn.print_(cs_filename, "created", True)
 	prn.print_("")
 
 def create_image_template(filename):

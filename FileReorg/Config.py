@@ -1,5 +1,5 @@
 # reorg config
-paths = [r'\\jfs\q$\__']
+paths = [r'C:\Users\jchoi\Desktop\wip\py\fs sf']
 video_ext = [".mp4",".mkv",".avi", ".mov"]
 contact_ext = ".png"
 exclude_postfix = "-zz"

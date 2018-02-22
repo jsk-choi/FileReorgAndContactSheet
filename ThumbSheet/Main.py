@@ -23,7 +23,7 @@ if (len(sys.argv) > 1):
 
 	if os.path.isdir(in_path):
 		conf.paths = [in_path]
-		prn.print_("path", in_path, True)
+		prn.print_(in_path, "path")
 
 for dir in conf.paths:
 
@@ -38,9 +38,9 @@ for dir in conf.paths:
 				try:
 					img.create_contact_sheet(file_info.fullfilename)
 				except:
-					prn.print_("error", str(sys.exc_info()[1]), True)
+					prn.print_(str(sys.exc_info()[1]), "error", True)
 					prn.print_("\n\n")
 
 prn.print_("")
-for msg in conf.out_message.sort():
+for msg in sorted(conf.out_message):
 	prn.print_(msg)
