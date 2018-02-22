@@ -16,3 +16,6 @@ text_font_size = 25
 thumb_spacing = 10
 thumb_width = int(round((width * 1.0 - ((thumbs_horizontal * thumb_spacing) + thumb_spacing)) / thumbs_horizontal))
 thumb_height = 0
+
+# output
+out_message = []

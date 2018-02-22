@@ -11,6 +11,16 @@ def print_ (out_string):
 	else:
 		sys.stdout.write(out_string + '\n')
 
+def print_ (topic, out_string, log = False):
+	message = topic.strip().ljust(10) + ": " + out_string.strip()
+	if str(out_string).endswith('\n') or str(out_string).endswith('\r'):
+		sys.stdout.write(message)
+	else:
+		sys.stdout.write(message + '\n')
+
+	if log:
+		conf.out_message.append(message)
+
 def print_progress(part, of):
 
 	prog_char = "#"

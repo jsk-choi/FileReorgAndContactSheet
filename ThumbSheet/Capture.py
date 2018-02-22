@@ -34,4 +34,4 @@ def capture_thumbnails(filename):
 			break
 
 	# return dict in key ordered
-	return collections.OrderedDict(sorted(thumbs_dict.items()))
+	return success, collections.OrderedDict(sorted(thumbs_dict.items()))

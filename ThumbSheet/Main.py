@@ -17,8 +17,13 @@ import Functions as fn
 import Image as img
 import Print as prn
 
-if (len(sys.argv) > 1) and os.path.isdir(sys.argv[1]):
-	conf.paths = [sys.argv[1].strip()]
+if (len(sys.argv) > 1):
+
+	in_path = str(sys.argv[1]).strip().replace('"', '')
+
+	if os.path.isdir(in_path):
+		conf.paths = [in_path]
+		prn.print_("path", in_path, True)
 
 for dir in conf.paths:
 
@@ -33,5 +38,9 @@ for dir in conf.paths:
 				try:
 					img.create_contact_sheet(file_info.fullfilename)
 				except:
-					prn.print_("Error: " + str(sys.exc_info()[1]))
+					prn.print_("error", str(sys.exc_info()[1]), True)
 					prn.print_("\n\n")
+
+prn.print_("")
+for msg in conf.out_message.sort():
+	prn.print_(msg)
