@@ -1,11 +1,13 @@
+
 import os
 import math
+import sys
 
 import numpy as np
 import cv2
 
 import rtconfig as cf
-import file_system as fs
+import rtfilesys as fs
 import rtfunctions as fn
 
 class file_info:
@@ -19,7 +21,7 @@ class file_info:
 		self.filename = filename_arr[-1]
 		self.extension = fs.file_ext(fullpath); 
 		self.folder = os.sep.join(filename_arr[:-1])
-		self.excludefilereorg = False # fn.ExcludeInFileReorg(self.fullfilename)
+		self.excludefilereorg = fn.exclude_in_file_reorg(self.fullfilename)
 
 		self.isatroot = self.rootfolder == self.folder;
 
@@ -39,7 +41,7 @@ class vid_attribute:
 
 	def __init__(self, file_nfo):
 
-		self.file_nfo = file_info(file_nfo.fullfilename)
+		self.file_nfo = file_nfo
 		self.vid_cap = cv2.VideoCapture(self.file_nfo.fullfilename)
 		
 		self.filename = self.file_nfo.fullfilename.split(os.sep)[-1]
@@ -48,15 +50,15 @@ class vid_attribute:
 			str(math.floor(self.fps * 10 ** 1) / 10 ** 1) \
 			if "." in str(self.fps) and ".0" not in str(self.fps) \
 			else str(int(self.fps))
-		self.frameinterval = int((self.frames * (1 - (cf.video_pad * 2))) / self.totalthumbs)
 		self.frames = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_COUNT))
+		self.totalthumbs = cf.thumbs_horizontal * cf.thumbs_vertical
+		self.frameinterval = int((self.frames * (1 - (cf.video_pad * 2))) / self.totalthumbs)
 		self.height = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 		self.length = int(self.frames / self.vid_cap.get(cv2.CAP_PROP_FPS))
 		self.length_string = ""
 		self.size = os.path.getsize(self.file_nfo.fullfilename)
 		self.size_string = ""
 		self.startframe = int(self.frames * cf.video_pad)
-		self.totalthumbs = cf.thumbs_horizontal * cf.thumbs_vertical
 		self.width = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 
 		# self.length_string

@@ -1,5 +1,6 @@
 import os
 
+import rtconfig as cf
 import rtprint as pr
 
 def get_all_files(dir):
@@ -17,9 +18,13 @@ def filename_only(file_path):
 	return filename
 
 def delete_file(file_path):
-	os.remove(file_path)
+	if not cf.debug: 
+		os.remove(file_path)
+
 	pr.print_('del:\t' + file_path)
 
 def move_file(src, dest):
-	os.rename(src, dest)
+	if not cf.debug: 
+		os.rename(src, dest)
+
 	pr.print_(''.join(['move:\t', src, ' -->\n\t', dest]))

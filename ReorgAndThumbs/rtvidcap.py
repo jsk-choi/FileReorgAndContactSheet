@@ -1,7 +1,7 @@
 import collections
 import sys
 
-import imaging as img
+import rtimaging as img
 import rtprint as pr
 
 def capture_thumbnails(vid_attr):

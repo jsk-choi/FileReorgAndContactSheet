@@ -1,10 +1,20 @@
 import sys
 
-def print_ (out_string):
+import rtconfig as cf
+
+def print_(out_string = "", topic = None, log = False):
+
+	message = out_string
+	if topic is not None:
+		message = topic.strip().ljust(10) + ": " + out_string.strip()
+
 	if str(out_string).endswith('\n') or str(out_string).endswith('\r'):
-		sys.stdout.write(out_string)
+		sys.stdout.write(message)
 	else:
-		sys.stdout.write(out_string + '\n')
+		sys.stdout.write(message + '\n')
+
+	if log:
+		cf.out_message.append(message)
 
 def print_progress(part, of):
 

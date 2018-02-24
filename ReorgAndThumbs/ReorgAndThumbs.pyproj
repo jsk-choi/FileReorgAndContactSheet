@@ -6,13 +6,18 @@
     <ProjectGuid>ebe087cd-3da4-4e04-bebe-c02d455886fe</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>thumbs.py</StartupFile>
+    <StartupFile>reorg.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>ReorgAndThumbs</Name>
     <RootNamespace>FileReorgAndContactSheet</RootNamespace>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>
+    </CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,16 +32,15 @@
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="_track_.txt" />
-    <Compile Include="classes.py" />
+    <Compile Include="rtclasses.py" />
     <Compile Include="rtconfig.py" />
-    <Compile Include="file_system.py" />
+    <Compile Include="rtfilesys.py" />
     <Compile Include="rtfunctions.py" />
-    <Compile Include="imaging.py" />
+    <Compile Include="rtimaging.py" />
     <Compile Include="thumbs.py" />
     <Compile Include="rtprint.py" />
     <Compile Include="reorg.py" />
-    <Compile Include="video_capture.py" />
+    <Compile Include="rtvidcap.py" />
     <Compile Include="__init__.py" />
   </ItemGroup>
   <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />

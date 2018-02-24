@@ -6,22 +6,29 @@ import collections
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-from classes import file_info, vid_attribute
+from rtclasses import *
 
-import file_system as fs	
-import imaging as img	
-import rtconfig as cf	
-import rtprint as prn	
-import video_capture as cap	
+import rtfilesys as fs
+import rtimaging as img
+import rtconfig as cf
+import rtprint as pr
+import rtvidcap as cap
 
 def create_contact_sheet(file_info):
 
-	prn.print_("start: ".ljust(8) + file_info.fullfilename)
+	pr.print_(file_info.fullfilename, "start")
 
-	vid_attr = cl.vid_attr(file_info.fullfilename, cf.thumbs_horizontal, cf.thumbs_vertical, cf.video_pad)
+	cs_filename = file_info.fullfilename[:-len(file_info.extension)] + cf.contact_ext
 
-	header_height, thumb_height, template_image = img.create_image_template(file_info.fullfilename)
-	thumbs = cap.capture_thumbnails(file_info.fullfilename)
+	if cf.debug:
+		pr.print_(cs_filename, "done")
+		pr.print_("")
+		return
+
+	vid_attr = vid_attribute(file_info)
+
+	header_height, thumb_height, template_image = img.create_image_template(file_info)
+	thumbs = cap.capture_thumbnails(vid_attr)
 
 	cf.thumb_height = thumb_height
 
@@ -45,23 +52,22 @@ def create_contact_sheet(file_info):
 		x_offset = cf.thumb_spacing
 		y_offset += (cf.thumb_height + cf.thumb_spacing)
 
-	cs_filename = file_info.fullfilename[:-len(file_info.extension)] + cf.contact_ext
 	cv2.imwrite(cs_filename, template_image)
-	prn.print_("done: ".ljust(8) + cs_filename)
-	prn.print_("")
 
-def create_image_template(filename):
+	pr.print_(cs_filename, "done")
+	pr.print_("")
 
-	file_nfo = file_info(filename, "")
+def create_image_template(file_nfo):
+
 	vid_attr = vid_attribute(file_nfo)
 
 	thumb_height = int(round((vid_attr.height / (vid_attr.width * 1.0)) * cf.thumb_width))
 	im_header = im_height = 0
 
-	im_header += cf.thumb_spacing						# pad
-	im_header += int(cf.text_font_size * 1.5)			# first line
-	im_header += int(cf.text_font_size)				# second line
-	im_header += int(cf.thumb_spacing / 2)			# pad
+	im_header += cf.thumb_spacing				# pad
+	im_header += int(cf.text_font_size * 1.5)	# first line
+	im_header += int(cf.text_font_size)			# second line
+	im_header += int(cf.thumb_spacing / 2)		# pad
 	im_height += ((thumb_height + cf.thumb_spacing) * cf.thumbs_vertical) + int(cf.thumb_spacing)	# all the thumbs
 
 	im = Image.new('RGBA', (cf.width, im_header + im_height), cf.background_color)

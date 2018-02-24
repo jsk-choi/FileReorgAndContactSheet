@@ -2,24 +2,25 @@ import os
 import shutil
 import sys
 
-import Config as conf
-import FileSystem as fs
-import Functions as fn
-from ClassFileInfo import *
+import rtconfig as cf
+import rtfilesys as fs
+import rtfunctions as fn
+import rtprint as pr
+from rtclasses import *
 
-def RenameMove(workingdir):
+def rename_move(workingdir):
 
 	# rename video file name and move to parent
-	allfiles = list(fs.GetAllFiles(workingdir))
+	allfiles = list(fs.get_all_files(workingdir))
 
 	# move video files to working folder root
 	for file in allfiles:
 
 		# object to parse out file path parts
-		fileinfo = FileInfo(file, workingdir)
+		fileinfo = file_info(file, workingdir)
 
 		# skip file is not video or marked for omit reorg
-		if (fileinfo.extension not in conf.video_ext) \
+		if (fileinfo.extension not in cf.video_ext) \
 			or fileinfo.isatroot \
 			or fileinfo.excludefilereorg: continue
 
@@ -35,7 +36,7 @@ def RenameMove(workingdir):
 			iterator += 1
 
 		# move / rename file to parent root dir
-		fs.Movefile(fileinfo.fullfilename, newfilename)
+		fs.move_file(fileinfo.fullfilename, newfilename)
 	
 	# delete subdirs
 
@@ -44,83 +45,53 @@ def RenameMove(workingdir):
 
 	# delete dir is not omit reorg
 	for dir in subdirs:
-		if not ExcludeInFileReorg(dir):
-			shutil.rmtree(os.path.join(workingdir, dir))
+		if not exclude_in_file_reorg(dir):
+			pr.print_(dir, "deltree")
+			if not cf.debug:
+				shutil.rmtree(os.path.join(workingdir, dir))
 
-def DeleteUnwatedFiles(workingdir):
+def delete_unwanted_files(workingdir):
 
-	allfiles = list(fs.GetAllFiles(workingdir))
+	allfiles = list(fs.get_all_files(workingdir))
 
 	# delete unwanted files
 	for file in allfiles:
 	
-		fileinfo = FileInfo(file, workingdir)
+		fileinfo = file_info(file, workingdir)
 
 		# if contact sheet
-		if (fileinfo.extension == conf.contact_ext):
-		# make sure matching video file exists
-			if not CorrespondingVideoFileExists(fs.FileNameOnly(file), conf.video_ext, allfiles):
+		if (fileinfo.extension == cf.contact_ext):
+			# make sure matching video file exists
+			if not corresponding_video_file_exists(fs.filename_only(file), allfiles):
 				# if no matching video file, delete
-				fs.DeleteFile(file)
+				fs.delete_file(file)
 		# if is not contact sheet or video file, delete
-		elif (fileinfo.extension not in conf.video_ext) or ('sample' in fileinfo.filename.lower()):
-			fs.DeleteFile(file)
+		elif (fileinfo.extension not in cf.video_ext) or ('sample' in fileinfo.filename.lower()):
+			fs.delete_file(file)
 
-def CorrespondingVideoFileExists(cs_fn, vid_exts, all_files):
+def corresponding_video_file_exists(cs_fn, all_files):
 
-	for ext in vid_exts:
+	for ext in cf.video_ext:
 		if (cs_fn + ext) in all_files:
 			return True
 
 	return False
 
-def CorrespondingContactSheetExists(vid_fn, cs_ext, all_files):
+def corresponding_contact_sheet_exists(video_fullfilename, all_files):
 
-	if (vid_fn + cs_ext) in all_files:
+	video_cs_filename = fs.filename_only(video_fullfilename) + cf.contact_ext
+
+	if video_cs_filename in all_files:
 		return True
 
 	return False
 
-def ExcludeInFileReorg(vid_fn):	
+def exclude_in_file_reorg(vid_fn):	
 
 	fullpath = vid_fn.split(os.sep)
-	excludepattern = conf.exclude_postfix
 
 	for item in fullpath:
-		if item.endswith(excludepattern):
+		if item.endswith(cf.exclude_postfix):
 			return True
 
 	return False
-
-def getopts(argv):
-
-	opts = {}  # Empty dictionary to store key-value pairs.
-
-	try:
-		while argv:  # While there are arguments left to parse...
-			if argv[0][0] == '-':  # Found a "-name value" pair.
-				opts[argv[0]] = argv[1]  # Add key and value to the dictionary.
-			argv = argv[1:]  # Reduce the argument list by copying it starting from index 1.
-	except:
-		help()
-
-	if not bool(opts): 
-		help()
-		return (False, opts)
-
-	return (bool(opts), opts)
-
-def help():
-	prompt = '\n'
-	prompt += 'Required arguments:\n'
-	prompt += '-r: omit = 0, reorg = 1\n'
-	prompt += '  reorganize, moves files to root directory\n'
-	prompt += '  renames file to parent directory name\n'
-	prompt += '-p: [path]\n'
-	prompt += '  path to directory to be reorganized\n\n'
-	prompt += 'sample:'
-	prompt += '  -a 1 -p \\\\nas\\files\\videos\n\n'
-	print prompt
-
-def TruncString(str, pad):
-	return ''.join([str[:pad], '....', str[-pad:]])
