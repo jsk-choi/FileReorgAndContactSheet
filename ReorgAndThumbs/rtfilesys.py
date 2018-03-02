@@ -20,11 +20,11 @@ def filename_only(file_path):
 def delete_file(file_path):
 	if not cf.debug: 
 		os.remove(file_path)
-
-	pr.print_('del:\t' + file_path)
+	pr.print_(file_path, 'del')
 
 def move_file(src, dest):
-	if not cf.debug: 
-		os.rename(src, dest)
+    if not cf.debug: 
+        os.rename(src, dest)
 
-	pr.print_(''.join(['move:\t', src, ' -->\n\t', dest]))
+    pr.print_(src, 'move-frm')
+    pr.print_(dest, 'move-to')

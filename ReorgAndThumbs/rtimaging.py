@@ -21,7 +21,7 @@ def create_contact_sheet(file_info):
 	cs_filename = file_info.fullfilename[:-len(file_info.extension)] + cf.contact_ext
 
 	if cf.debug:
-		pr.print_(cs_filename, "done")
+		pr.print_(cs_filename, "done", True)
 		pr.print_("")
 		return
 
@@ -54,7 +54,7 @@ def create_contact_sheet(file_info):
 
 	cv2.imwrite(cs_filename, template_image)
 
-	pr.print_(cs_filename, "done")
+	pr.print_(cs_filename, "done", True)
 	pr.print_("")
 
 def create_image_template(file_nfo):

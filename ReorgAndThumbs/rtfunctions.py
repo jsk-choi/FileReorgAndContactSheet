@@ -58,6 +58,9 @@ def delete_unwanted_files(workingdir):
 	for file in allfiles:
 	
 		fileinfo = file_info(file, workingdir)
+		
+		# skip is exclude pattern found
+		if fileinfo.excludefilereorg: continue
 
 		# if contact sheet
 		if (fileinfo.extension == cf.contact_ext):
