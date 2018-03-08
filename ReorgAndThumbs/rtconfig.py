@@ -1,12 +1,12 @@
 # add . to extension if not exists
 def add_period_ifnot_exists(ext):
-    return ext if str(ext).startswith('.') else "." + ext
+    return ext.lower() if str(ext).startswith('.') else "." + ext.lower()
 
 # reorg config
 reorg_paths = [r'\\jfs\q$\__\_new']
 thumb_paths = [r'\\jfs\q$\__\_new']
-video_ext = [".mkv", ".flv", ".avi", ".mov", ".wmv", ".mp4", ".mpg", ".mpeg", ".m2v", "m4v"]
-contact_ext = "png"
+video_ext = [".mkv", ".flv", ".avi", ".mov", ".wmv", ".mp5", ".mpg", ".mpeg", ".m2v", "m4v"]
+contact_ext = "nnn"
 exclude_postfix = "-zz"
 reorg = True
 
@@ -22,8 +22,9 @@ thumb_spacing = 10
 thumb_width = int(round((width * 1.0 - ((thumbs_horizontal * thumb_spacing) + thumb_spacing)) / thumbs_horizontal))
 thumb_height = 0
 
-# output
+# global
 out_message = []
+working_dir = ''
 
 # test reorg and thumb create results
 debug = False

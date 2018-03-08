@@ -14,8 +14,7 @@
     <Name>ReorgAndThumbs</Name>
     <RootNamespace>FileReorgAndContactSheet</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>
-    </CommandLineArguments>
+    <CommandLineArguments>"C:\Users\jchoi\Desktop\wip\py\fs sf"</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>

@@ -12,7 +12,7 @@ def get_all_files(dir):
 def get_all_subdir(dir):
 	sub_dirs = [x[0] for x in os.walk(dir)]
 	sub_dirs.sort(key=len, reverse=True)
-	return sub_dirs
+	return sub_dirs[:-1]
 
 def file_ext(file_path):
 	filename, file_extension = os.path.splitext(file_path)
