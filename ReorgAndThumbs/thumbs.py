@@ -39,5 +39,5 @@ for dir in cf.thumb_paths:
 pr.print_("")
 
 if len(cf.out_message) > 2:
-	for msg in sorted(conf.out_message):
-		prn.print_(msg)
+	for msg in sorted(cf.out_message):
+		pr.print_(msg)

@@ -3,10 +3,10 @@ def add_period_ifnot_exists(ext):
     return ext.lower() if str(ext).startswith('.') else "." + ext.lower()
 
 # reorg config
-reorg_paths = [r'\\jfs\q$\__\_new']
-thumb_paths = [r'\\jfs\q$\__\_new']
-video_ext = [".mkv", ".flv", ".avi", ".mov", ".wmv", ".mp5", ".mpg", ".mpeg", ".m2v", "m4v"]
-contact_ext = "nnn"
+reorg_paths = [r'']
+thumb_paths = [r'']
+video_ext = [".mkv", ".flv", ".avi", ".mov", ".wmv", ".mp4", ".mpg", ".mpeg", ".m2v", "m4v"]
+contact_ext = ".png"
 exclude_postfix = "-zz"
 reorg = True
 
