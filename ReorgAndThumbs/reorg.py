@@ -22,8 +22,10 @@ if (len(sys.argv) > 1):
 
 # delete unwanted files
 for dir in cf.reorg_paths:
+
+	cf.working_dir = dir
 	
-	fn.delete_unwanted_files(dir)
+	fn.delete_unwanted_files()
 
 	if cf.reorg:
-		fn.rename_move(dir)
+		fn.rename_move()

@@ -30,6 +30,8 @@ class file_info:
 		
 		parent_arr = fullpath.replace(workingfolder, "").split(os.sep)
 		
+		if len(parent_arr) < 2: return
+
 		self.parentfoldername = [s for s in parent_arr if len(s) > 0][0]
 		
 		workingfolderArr = [s for s in workingfolder.split(os.sep) if len(s) > 0]

@@ -9,6 +9,11 @@ def get_all_files(dir):
 		for file in folder[2]:
 			yield os.path.join(folder[0], file)
 
+def get_all_subdir(dir):
+	sub_dirs = [x[0] for x in os.walk(dir)]
+	sub_dirs.sort(key=len, reverse=True)
+	return sub_dirs[:-1]
+
 def file_ext(file_path):
 	filename, file_extension = os.path.splitext(file_path)
 	return file_extension

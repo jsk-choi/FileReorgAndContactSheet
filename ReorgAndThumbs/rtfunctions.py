@@ -8,16 +8,16 @@ import rtfunctions as fn
 import rtprint as pr
 from rtclasses import *
 
-def rename_move(workingdir):
+def rename_move():
 
 	# rename video file name and move to parent
-	allfiles = list(fs.get_all_files(workingdir))
+	allfiles = list(fs.get_all_files(cf.working_dir))
 
 	# move video files to working folder root
 	for file in allfiles:
 
 		# object to parse out file path parts
-		fileinfo = file_info(file, workingdir)
+		fileinfo = file_info(file, cf.working_dir)
 
 		# skip file is not video or marked for omit reorg
 		if (fileinfo.extension not in cf.video_ext) \
@@ -39,28 +39,45 @@ def rename_move(workingdir):
 		fs.move_file(fileinfo.fullfilename, newfilename)
 	
 	# delete subdirs
+	all_sub_dirs = fs.get_all_subdir(cf.working_dir)
+	for dir in all_sub_dirs: 
+		if len(list(fs.get_all_files(dir))) == 0:
+			delete_folder(dir)
+		else:
+			pr.print_(dir, "skip")
 
-	# get first level subdirs
-	subdirs = next(os.walk(workingdir))[1]
+	## get first level subdirs
+	#subdirs_first_level = next(os.walk(cf.working_dir))[1]
 
-	# delete dir is not omit reorg
-	for dir in subdirs:
-		if not exclude_in_file_reorg(dir):
-			pr.print_(dir, "deltree")
-			if not cf.debug:
-				shutil.rmtree(os.path.join(workingdir, dir))
+	## delete dir is not omit reorg
+	#for dir in subdirs_first_level: 
+	#	all_sub_dirs = fs.get_all_subdir(dir)
+	#	if len(all_sub_dirs) == 0:
+	#		delete_folder(dir)
+	#	else:
+	#		pr.print_(dir, "delskip")
 
-def delete_unwanted_files(workingdir):
+def delete_folder(dir):
+	if not exclude_in_file_reorg(dir):
+		pr.print_(dir, "deltree")
+		if not cf.debug:
+			shutil.rmtree(dir)
+	else:
+		pr.print_(dir, "delskip")
 
-	allfiles = list(fs.get_all_files(workingdir))
+def delete_unwanted_files():
+
+	allfiles = list(fs.get_all_files(cf.working_dir))
 
 	# delete unwanted files
 	for file in allfiles:
 	
-		fileinfo = file_info(file, workingdir)
+		fileinfo = file_info(file, cf.working_dir)
 		
 		# skip is exclude pattern found
-		if fileinfo.excludefilereorg: continue
+		if fileinfo.excludefilereorg: 
+			pr.print_(fileinfo.fullfilename, "delskip")
+			continue
 
 		# if contact sheet
 		if (fileinfo.extension == cf.contact_ext):
@@ -89,9 +106,11 @@ def corresponding_contact_sheet_exists(video_fullfilename, all_files):
 
 	return False
 
-def exclude_in_file_reorg(vid_fn):	
+def exclude_in_file_reorg(vid_fn):
 
-	fullpath = vid_fn.split(os.sep)
+	trunc_path = str(vid_fn).replace(cf.working_dir, "")
+
+	fullpath = trunc_path.split(os.sep)
 
 	for item in fullpath:
 		if item.endswith(cf.exclude_postfix):
