@@ -18,12 +18,16 @@ def create_contact_sheet(filename):
 
 	file_info = FileInfo(filename, '')
 
-	prn.print_("start: ".ljust(8) + file_info.fullfilename)
+	prn.print_(file_info.fullfilename, "start")
 
 	vid_attr = cl.vid_attr(file_info.fullfilename, conf.thumbs_horizontal, conf.thumbs_vertical, conf.video_pad)
 
 	header_height, thumb_height, template_image = img.create_image_template(file_info.fullfilename)
-	thumbs = cap.capture_thumbnails(file_info.fullfilename)
+	capture_success, thumbs = cap.capture_thumbnails(file_info.fullfilename)
+
+	if not capture_success:
+		conf.out_message.append("failed", file_info.fullfilename, True)
+		return
 
 	conf.thumb_height = thumb_height
 
@@ -49,7 +53,7 @@ def create_contact_sheet(filename):
 
 	cs_filename = file_info.fullfilename[:-len(file_info.extension)] + conf.contact_ext
 	cv2.imwrite(cs_filename, template_image)
-	prn.print_("done: ".ljust(8) + cs_filename)
+	prn.print_(cs_filename, "created", True)
 	prn.print_("")
 
 def create_image_template(filename):

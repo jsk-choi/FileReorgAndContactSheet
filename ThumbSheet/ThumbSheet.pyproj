@@ -11,6 +11,9 @@
     <OutputPath>.</OutputPath>
     <Name>ThumbSheet</Name>
     <RootNamespace>ThumbSheet</RootNamespace>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>"C:\Users\jchoi\Desktop\wip\py\fs sf\"</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
