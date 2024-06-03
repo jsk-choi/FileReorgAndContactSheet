@@ -1,3 +1,4 @@
+
 import os
 import sys
 import cv2
@@ -27,6 +28,16 @@ def create_contact_sheet(file_info):
 
 	vid_attr = vid_attribute(file_info)
 
+	if (vid_attr.isverticalvideo):
+		cf.thumbs_columns = cf.thumbs_columns_verticalvideo
+		cf.thumbs_rows = cf.thumbs_rows_verticalvideo
+		cf.thumb_width = cf.calc_thumb_width()
+	else:
+		cf.thumbs_columns = cf.thumbs_columns_horizontalvideo
+		cf.thumbs_rows = cf.thumbs_rows_horizontalvideo
+		cf.thumb_width = cf.calc_thumb_width()	
+
+	vid_attr = vid_attribute(file_info)
 	header_height, thumb_height, template_image = img.create_image_template(file_info)
 	thumbs = cap.capture_thumbnails(vid_attr)
 
@@ -38,9 +49,9 @@ def create_contact_sheet(file_info):
 	x_offset = cf.thumb_spacing
 	y_offset = header_height
 
-	for y in range (1, cf.thumbs_vertical + 1):
+	for y in range (1, cf.thumbs_rows + 1):
 
-		for x in range(1, cf.thumbs_horizontal + 1):
+		for x in range(1, cf.thumbs_columns + 1):
 
 			thumbnail = thumbs[thumbs_keys[counter]]
 			thumbnail_scaled = cv2.resize(thumbnail, (cf.thumb_width, cf.thumb_height), interpolation = cv2.INTER_AREA)
@@ -68,7 +79,7 @@ def create_image_template(file_nfo):
 	im_header += int(cf.text_font_size * 1.5)	# first line
 	im_header += int(cf.text_font_size)			# second line
 	im_header += int(cf.thumb_spacing / 2)		# pad
-	im_height += ((thumb_height + cf.thumb_spacing) * cf.thumbs_vertical) + int(cf.thumb_spacing)	# all the thumbs
+	im_height += ((thumb_height + cf.thumb_spacing) * cf.thumbs_rows) + int(cf.thumb_spacing)	# all the thumbs
 
 	im = Image.new('RGBA', (cf.width, im_header + im_height), cf.background_color)
 	draw = ImageDraw.Draw(im)

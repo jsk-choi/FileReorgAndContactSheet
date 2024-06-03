@@ -53,7 +53,7 @@ class vid_attribute:
 			if "." in str(self.fps) and ".0" not in str(self.fps) \
 			else str(int(self.fps))
 		self.frames = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_COUNT))
-		self.totalthumbs = cf.thumbs_horizontal * cf.thumbs_vertical
+		self.totalthumbs = (cf.thumbs_columns * cf.thumbs_rows) + 1
 		self.frameinterval = int((self.frames * (1 - (cf.video_pad * 2))) / self.totalthumbs)
 		self.height = int(self.vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 		self.length = int(self.frames / self.vid_cap.get(cv2.CAP_PROP_FPS))
@@ -81,4 +81,7 @@ class vid_attribute:
 			self.size_string = "%dMB" % int(self.size / 1048576.0)
 		else:
 			self.size_string = "%dKB" % int(self.size / 1024.0)
+
+		self.isverticalvideo = self.height > self.width
+
 

@@ -19,6 +19,8 @@ if (len(sys.argv) > 1):
 		cf.thumb_paths = [in_path]
 		pr.print_(in_path, "path")
 
+createthumbs = []
+
 for dir in cf.thumb_paths:
 
 	files = list(fs.get_all_files(dir))
@@ -31,10 +33,18 @@ for dir in cf.thumb_paths:
 
 			if not fn.corresponding_contact_sheet_exists(file_nfo.fullfilename, files):
 
-				try:
-					img.create_contact_sheet(file_nfo)
-				except:
-					pr.print_("{0}{1}{2}{1}".format(file_nfo.fullfilename, str(sys.exc_info()[1]), "\n"), "error", True)
+				createthumbs.append(file_nfo)
+
+ctr = 1
+totct = len(createthumbs)
+for fle in createthumbs:
+	print(str(ctr) + "/" + str(totct))
+	try:
+		img.create_contact_sheet(fle)
+	except:
+		pr.print_("{0}{1}{2}{1}".format(file_nfo.fullfilename, str(sys.exc_info()[1]), "\n"), "error", True)
+	
+	ctr += 1
 
 pr.print_("")
 
